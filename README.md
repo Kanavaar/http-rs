@@ -1,5 +1,5 @@
 # http-rs
-bad implementation for building http request, like the [http](https://crates.io/crates/http) crate but only for requests (currently)
+bad implementation for building http requests, like the [http](https://crates.io/crates/http) crate but only for requests (currently)
 
 ## Disclaimer
 
