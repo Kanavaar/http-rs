@@ -1,12 +1,11 @@
 name: "CI"
 on: ["push", "pull_request"]
 
-env:
-  SCCACHE_GHA_ENABLED: "true"
-  RUSTC_WRAPPER: "sccache"
-
 jobs:
   cargo-test:
+    env:
+      SCCACHE_GHA_ENABLED: "true"
+      RUSTC_WRAPPER: "sccache"
     runs-on: ubuntu-latest
     steps:
         - name: checkout
@@ -16,6 +15,9 @@ jobs:
         - name: cargo test
           run: cargo test
   cargo-build:
+    env:
+      SCCACHE_GHA_ENABLED: "true"
+      RUSTC_WRAPPER: "sccache"
     runs-on: ubuntu-latest
     steps:
       - name: checkout
