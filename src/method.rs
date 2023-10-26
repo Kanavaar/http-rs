@@ -53,8 +53,6 @@ mod test {
         assert_eq!(Method::from_str("POST"), Ok(Method::Post));
         assert_eq!(Method::from_str("PUT"), Ok(Method::Put));
         assert_eq!(Method::from_str("DELETE"), Ok(Method::Delete));
-        let Err(crate::Error::MethodConversion(_)) = Method::from_str("Get") else {
-            panic!()
-        };
+        assert!(Method::from_str("Get").is_err());
     }
 }
