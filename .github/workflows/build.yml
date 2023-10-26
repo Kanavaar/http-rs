@@ -1,0 +1,29 @@
+on:
+    push:
+        branches: ["main", "master"]
+    pull_request:
+        branches: ["main", "master"]
+
+env:
+  SCCACHE_GHA_ENABLED: "true"
+  RUSTC_WRAPPER: "sccache"
+
+jobs:
+    cargo-test:
+        runs-on: ubuntu-latest
+        steps:
+            - name: checkout
+              uses: actions/checkout@v4
+            - name: Run sccache-cache
+              uses: mozilla-actions/sccache-action@v0.0.3
+            - name: cargo test
+              run: cargo test
+    cargo-build:
+        runs-on: ubuntu-latest
+        steps:
+          - name: checkout
+            uses: actions/checkout@v4
+          - name: Run sccache-cache
+            uses: mozilla-actions/sccache-action@v0.0.3
+          - name: cargo-build
+            run: cargo build
