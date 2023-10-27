@@ -126,13 +126,13 @@ impl Default for RequestComponents {
 }
 
 #[cfg(test)]
-mod test {
+mod test_builder {
     use crate::url::Protocol;
 
     use super::*;
 
     #[test]
-    fn test_builder_add_url() {
+    fn url() {
         let builder = Request::builder().url("https://example.com/index/index.html");
         let url = builder.components().unwrap().url;
         assert_eq!(
@@ -145,13 +145,13 @@ mod test {
     }
 
     #[test]
-    fn test_builder_add_method() {
+    fn method() {
         let builder = Request::builder().method(Method::Delete);
         assert_eq!(builder.components().unwrap().method, Method::Delete);
     }
 
     #[test]
-    fn test_builder_add_header() {
+    fn header() {
         let builder = Request::builder()
             .header("Accept", "application/json")
             .header("Content-Type", "test/plain");
@@ -159,5 +159,20 @@ mod test {
         let header_map = components.header.get_map();
         assert!(&header_map.get("Content-Type").is_some());
         assert!(&header_map.get("Accept").is_some());
+    }
+
+    #[test]
+    fn full() {
+        let builder = Request::get("https://example.com/index/index.html")
+            .header("Accept", "application/json")
+            .header("Content-Type", "application/json");
+        let components = builder.components().unwrap();
+        let header_map = components.header.get_map();
+        assert!(&header_map.get_key_value("Accept").is_some());
+        assert!(&header_map.get_key_value("Content-Type").is_some());
+        assert_eq!(components.url.path(), String::from("/index/index.html"));
+        assert_eq!(components.url.protocol(), Protocol::Https);
+        assert_eq!(components.url.host(), String::from("example.com"));
+        assert_eq!(components.method, Method::Get);
     }
 }
