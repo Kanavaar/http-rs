@@ -116,4 +116,10 @@ mod test {
         assert_eq!(url.host(), String::from("example.com"));
         assert_eq!(url.path(), String::from("/index/index.html"));
     }
+
+    #[test]
+    fn test_builder_add_method() {
+        let builder = Request::builder().method(Method::Delete);
+        assert_eq!(builder.components().unwrap().method, Method::Delete);
+    }
 }
