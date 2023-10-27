@@ -125,4 +125,13 @@ mod test {
         let builder = Request::builder().method(Method::Delete);
         assert_eq!(builder.components().unwrap().method, Method::Delete);
     }
+
+    #[test]
+    fn test_builder_add_header() {
+        let builder = Request::builder().header("Accept", "application/json").header("Content-Type", "test/plain");
+        let components = builder.components().unwrap();
+        let header_map = components.header.get_map();
+        assert!(&header_map.get("Content-Type").is_some());
+        assert!(&header_map.get("Accept").is_some());
+    }
 }
