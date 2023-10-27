@@ -74,7 +74,12 @@ impl RequestBuilder {
                 ..Default::default()
             },
             Some(components) => {
-                let header: HeaderMap = header.get_map().to_owned().into_iter().chain(components.header.get_map().to_owned()).collect();
+                let header: HeaderMap = header
+                    .get_map()
+                    .to_owned()
+                    .into_iter()
+                    .chain(components.header.get_map().to_owned())
+                    .collect();
                 RequestComponents {
                     header: header.into(),
                     ..components
@@ -131,7 +136,9 @@ mod test {
 
     #[test]
     fn test_builder_add_header() {
-        let builder = Request::builder().header("Accept", "application/json").header("Content-Type", "test/plain");
+        let builder = Request::builder()
+            .header("Accept", "application/json")
+            .header("Content-Type", "test/plain");
         let components = builder.components().unwrap();
         let header_map = components.header.get_map();
         assert!(&header_map.get("Content-Type").is_some());
