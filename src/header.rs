@@ -37,6 +37,17 @@ impl Header {
     }
 
     /// Removes the entry of Header and value returning neither
+    /// Different from std, as std's `HashMap::remove` return the
+    /// value of the deleted key
+    /// to get that behavior use `get_mut_map`
+    /// ```
+    /// use http_rs::header::Header;
+    /// 
+    /// let mut header = Header::new();
+    /// header.insert("Key", "Value");
+    /// let mut map = header.get_mut_map();
+    /// let value = map.remove("Key").unwrap(); // "Value"
+    /// ```
     pub fn remove(&mut self, header: impl Into<String>) {
         self.0.remove(&header.into());
     }
