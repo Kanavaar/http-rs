@@ -23,6 +23,10 @@ impl RequestBuilder {
         Self::default()
     }
 
+    pub(crate) fn components(&self) -> Option<RequestComponents> {
+        self.components.clone()
+    }
+
     pub fn method(mut self, method: Method) -> Self {
         let components = match self.components {
             None => RequestComponents {
@@ -81,7 +85,7 @@ impl RequestBuilder {
 }
 
 #[derive(Clone, Debug, PartialEq, Eq)]
-struct RequestComponents {
+pub(crate) struct RequestComponents {
     method: Method,
     url: crate::url::Url,
     header: crate::header::Header,
@@ -94,5 +98,22 @@ impl Default for RequestComponents {
             url: Url::new(""),
             header: Default::default(),
         }
+    }
+}
+
+#[cfg(test)]
+mod test {
+    use crate::url::Protocol;
+
+    use super::*;
+
+    #[test]
+    fn test_builder_add_url() {
+        let builder = Request::builder().url("https://example.com/index/index.html");
+        let url = builder.components().unwrap().url;
+        assert_eq!(url.to_string(), String::from("https://example.com/index/index.html"));
+        assert_eq!(url.protocol(), Protocol::Https);
+        assert_eq!(url.host(), String::from("example.com"));
+        assert_eq!(url.path(), String::from("/index/index.html"));
     }
 }
