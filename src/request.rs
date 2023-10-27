@@ -1,4 +1,4 @@
-use crate::{url::Url, Method};
+use crate::{header::HeaderMap, url::Url, Method};
 
 #[derive(Clone, Debug, PartialEq, Eq)]
 pub struct Request {
@@ -55,13 +55,36 @@ impl RequestBuilder {
 
         self
     }
+
+    pub fn header(mut self, header: impl Into<String>, value: impl Into<String>) -> Self {
+        let value = value.into();
+        let h = header.into();
+        let mut header_map = HeaderMap::new();
+        header_map.insert(h, value);
+
+        let header = header_map.into();
+
+        let components = match self.components {
+            None => RequestComponents {
+                header,
+                ..Default::default()
+            },
+            Some(components) => RequestComponents {
+                header,
+                ..components
+            },
+        };
+
+        self.components = Some(components);
+        self
+    }
 }
 
 #[derive(Clone, Debug, PartialEq, Eq)]
 struct RequestComponents {
     method: Method,
     url: crate::url::Url,
-    headers: crate::header::Headers,
+    header: crate::header::Header,
 }
 
 impl Default for RequestComponents {
@@ -69,7 +92,7 @@ impl Default for RequestComponents {
         Self {
             method: Method::Get,
             url: Url::new(""),
-            headers: Default::default(),
+            header: Default::default(),
         }
     }
 }

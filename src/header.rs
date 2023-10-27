@@ -1,9 +1,9 @@
 pub type HeaderMap = std::collections::HashMap<String, String>;
 
 #[derive(Debug, Clone, PartialEq, Eq, Default)]
-pub struct Headers(HeaderMap);
+pub struct Header(HeaderMap);
 
-impl std::fmt::Display for Headers {
+impl std::fmt::Display for Header {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         let mut headers = String::new();
         for (header, value) in self.get_map() {
@@ -13,7 +13,13 @@ impl std::fmt::Display for Headers {
     }
 }
 
-impl Headers {
+impl From<HeaderMap> for Header {
+    fn from(value: HeaderMap) -> Self {
+        Self(value)
+    }
+}
+
+impl Header {
     pub fn new() -> Self {
         Self::default()
     }
