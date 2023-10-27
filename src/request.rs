@@ -10,6 +10,22 @@ impl Request {
     pub fn builder() -> RequestBuilder {
         RequestBuilder::default()
     }
+
+    pub fn get(url: impl Into<String>) -> RequestBuilder {
+        Request::builder().method(Method::Get).url(url)
+    }
+
+    pub fn post(url: impl Into<String>) -> RequestBuilder {
+        Request::builder().method(Method::Post).url(url)
+    }
+
+    pub fn put(url: impl Into<String>) -> RequestBuilder {
+        Request::builder().method(Method::Put).url(url)
+    }
+
+    pub fn delete(url: impl Into<String>) -> RequestBuilder {
+        Request::builder().method(Method::Delete).url(url)
+    }
 }
 
 #[derive(Clone, Debug, Default, PartialEq, Eq)]
