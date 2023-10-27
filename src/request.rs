@@ -73,10 +73,13 @@ impl RequestBuilder {
                 header,
                 ..Default::default()
             },
-            Some(components) => RequestComponents {
-                header,
-                ..components
-            },
+            Some(components) => {
+                let header: HeaderMap = header.get_map().to_owned().into_iter().chain(components.header.get_map().to_owned()).collect();
+                RequestComponents {
+                    header: header.into(),
+                    ..components
+                }
+            }
         };
 
         self.components = Some(components);
