@@ -28,7 +28,7 @@ impl RequestBuilder {
     }
 
     pub fn method(mut self, method: Method) -> Self {
-        let components = match self.components {
+        let components = match self.components() {
             None => RequestComponents {
                 method,
                 ..Default::default()
@@ -47,7 +47,7 @@ impl RequestBuilder {
     pub fn url(mut self, url: impl Into<String>) -> Self {
         let url = url.into();
         let url = Url::new(url.as_str());
-        let components = match self.components {
+        let components = match self.components() {
             None => RequestComponents {
                 url,
                 ..Default::default()
@@ -68,7 +68,7 @@ impl RequestBuilder {
 
         let header = header_map.into();
 
-        let components = match self.components {
+        let components = match self.components() {
             None => RequestComponents {
                 header,
                 ..Default::default()
