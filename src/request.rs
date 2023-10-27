@@ -39,6 +39,22 @@ impl RequestBuilder {
 
         self
     }
+
+    pub fn url(mut self, url: impl Into<String>) -> Self {
+        let url = url.into();
+        let url = Url::new(url.as_str());
+        let components = match self.components {
+            None => RequestComponents {
+                url,
+                ..Default::default()
+            },
+            Some(component) => RequestComponents { url, ..component },
+        };
+
+        self.components = Some(components);
+
+        self
+    }
 }
 
 #[derive(Clone, Debug, PartialEq, Eq)]
