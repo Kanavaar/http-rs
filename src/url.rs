@@ -81,12 +81,14 @@ mod test {
     use super::*;
 
     #[test]
-    fn  test_new_url() {
+    fn test_new_url() {
         let url = Url::new("https://example.com/no_there/lol/index.html");
-        assert_eq!(url.to_string(), String::from("https://example.com/no_there/lol/index.html"));
+        assert_eq!(
+            url.to_string(),
+            String::from("https://example.com/no_there/lol/index.html")
+        );
         assert_eq!(url.protocol(), Protocol::Https);
         assert_eq!(url.host(), String::from("example.com"));
         assert_eq!(url.path(), String::from("/no_there/lol/index.html"));
-
     }
 }

@@ -1,4 +1,4 @@
-use crate::{Method, url::Url};
+use crate::{url::Url, Method};
 
 #[derive(Clone, Debug, PartialEq, Eq)]
 pub struct Request {
@@ -24,12 +24,18 @@ impl RequestBuilder {
     }
 
     pub fn method(mut self, method: Method) -> Self {
-        let component = match self.components {
-            None => RequestComponents {method, ..Default::default()},
-            Some(component) => RequestComponents { method, ..component },
+        let components = match self.components {
+            None => RequestComponents {
+                method,
+                ..Default::default()
+            },
+            Some(component) => RequestComponents {
+                method,
+                ..component
+            },
         };
 
-        self.components = Some(component);
+        self.components = Some(components);
 
         self
     }
@@ -44,6 +50,10 @@ struct RequestComponents {
 
 impl Default for RequestComponents {
     fn default() -> Self {
-        Self { method: Method::Get, url: Url::new(""), headers: Default::default() }
+        Self {
+            method: Method::Get,
+            url: Url::new(""),
+            headers: Default::default(),
+        }
     }
 }

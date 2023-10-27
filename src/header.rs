@@ -21,7 +21,7 @@ impl Headers {
     pub fn get_map(&self) -> &HeaderMap {
         &self.0
     }
-    
+
     pub fn get_mut_map(&mut self) -> &mut HeaderMap {
         &mut self.0
     }
