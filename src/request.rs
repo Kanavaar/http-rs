@@ -111,7 +111,10 @@ mod test {
     fn test_builder_add_url() {
         let builder = Request::builder().url("https://example.com/index/index.html");
         let url = builder.components().unwrap().url;
-        assert_eq!(url.to_string(), String::from("https://example.com/index/index.html"));
+        assert_eq!(
+            url.to_string(),
+            String::from("https://example.com/index/index.html")
+        );
         assert_eq!(url.protocol(), Protocol::Https);
         assert_eq!(url.host(), String::from("example.com"));
         assert_eq!(url.path(), String::from("/index/index.html"));
