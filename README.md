@@ -1,3 +1,5 @@
+# Moved to [codeberg](https://codeberg.org/tilmanmixyz/http-rs)
+
 # http-rs
 bad implementation for building http requests, like the [http](https://crates.io/crates/http) crate but only for requests (currently)
 
